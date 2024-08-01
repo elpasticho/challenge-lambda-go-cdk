@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+
+# CDK
+cdk.out/
+cdk.context.json
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Binary
+bootstrap
