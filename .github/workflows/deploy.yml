@@ -29,7 +29,7 @@ jobs:
           npm install
       
       - name: Compile TypeScript
-      `run: npx tsc
+        run: npx tsc
 
       - name: Download Go dependencies
         run: go mod download
