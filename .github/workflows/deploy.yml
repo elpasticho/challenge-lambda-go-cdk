@@ -50,3 +50,5 @@ jobs:
           npm run build
           export CDK_DEBUG=true
           npx cdk deploy --require-approval never --verbose | tee deployment.log
+          sleep 5
+          cat deployment.log
