@@ -1,6 +1,6 @@
 module challenge-lambda-go-cdk
 
-go 1.22.0
+go 1.20
 
 require (
 	github.com/aws/aws-cdk-go/awscdk/v2 v2.150.0
