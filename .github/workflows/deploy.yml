@@ -43,4 +43,5 @@ jobs:
         run: |
           cd cdk
           npm run build
-          npx cdk deploy --require-approval never
+          export CDK_DEBUG=true
+          npx cdk deploy --require-approval never --verbose
