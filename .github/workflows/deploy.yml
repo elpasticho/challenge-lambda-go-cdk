@@ -49,4 +49,4 @@ jobs:
           cd cdk
           npm run build
           export CDK_DEBUG=true
-          npx cdk deploy --require-approval never --verbose
+          npx cdk deploy --require-approval never --verbose | tee deployment.log
