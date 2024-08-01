@@ -8,35 +8,39 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.20
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-    - name: Download Go dependencies
-      run: go mod download
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
 
-    - name: Build Go binary
-      run: GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+      - name: Install dependencies
+        run: |
+          cd cdk
+          npm install
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Download Go dependencies
+        run: go mod download
 
-    - name: Install CDK dependencies
-      run: |
-        cd cdk
-        npm install
+      - name: Build Lambda function
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o hello-world main.go
 
-    - name: Deploy with CDK
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: 'us-east-1'
-      run: |
-        cd cdk
-        npm run cdk deploy -- --require-approval never
+      - name: Deploy CDK stack
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-1'
+        run: |
+          cd cdk
+          npm run build
+          npx cdk deploy --require-approval never
